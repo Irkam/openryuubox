@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="24440f27-9e87-40b3-bfe5-cc4473400660" name="Default" comment="initial commit">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/boxes/BoxesVector.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/openryuubox.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/MainGameScreen.java" afterPath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/screens/MainGameScreen.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/MenuScreen.java" afterPath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/screens/MenuScreen.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/boxes/ValueBox.java" afterPath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/boxes/NumericBox.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/boxes/Box.java" afterPath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/boxes/Box.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/boxes/LitteralBox.java" afterPath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/boxes/LitteralBox.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/OpenRyuuBox.java" afterPath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/OpenRyuuBox.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/boxes/UnknownBox.java" afterPath="$PROJECT_DIR$/core/src/net/orbitalchainsaw/openryuubox/boxes/UnknownBox.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/android.iml" afterPath="$PROJECT_DIR$/android/android.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/core.iml" afterPath="$PROJECT_DIR$/core/core.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/desktop/desktop.iml" afterPath="$PROJECT_DIR$/desktop/desktop.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/html/html.iml" afterPath="$PROJECT_DIR$/html/html.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ios/ios.iml" afterPath="$PROJECT_DIR$/ios/ios.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+    <list default="true" id="24440f27-9e87-40b3-bfe5-cc4473400660" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/android/assets/boxes/default.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/android/assets/boxes/default.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="OpenRyuuBox.iws" />
@@ -2876,7 +2860,11 @@
       <created>1412976824414</created>
       <updated>1412976824414</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="initial commit">
+      <created>1413381131745</created>
+      <updated>1413381131745</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
