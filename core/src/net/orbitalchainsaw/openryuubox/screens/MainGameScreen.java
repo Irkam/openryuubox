@@ -1,4 +1,4 @@
-package net.orbitalchainsaw.openryuubox;
+package net.orbitalchainsaw.openryuubox.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+
+import net.orbitalchainsaw.openryuubox.OpenRyuuBox;
+import net.orbitalchainsaw.openryuubox.boxes.Box;
+import net.orbitalchainsaw.openryuubox.boxes.BoxesVector;
 
 import java.awt.Rectangle;
 
@@ -22,43 +28,30 @@ public class MainGameScreen implements Screen{
     Texture img;
     Vector3 touchpos;
 
+    private Stage stage;
+    private BoxesVector boxesVector;
+
     public MainGameScreen(final OpenRyuuBox game){
         this.game = game;
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        this.stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
 
-        game.batch = new SpriteBatch();
-
-        img = new Texture("badlogic.jpg");
-
-        rekt = new Rectangle();
-        rekt.x = 800/2 - 64/2;
-        rekt.y = 20;
-        rekt.width = 64;
-        rekt.height = 64;
+        this.boxesVector = new BoxesVector();
+        for(int i = 0; i < 12; i++){
+            this.boxesVector.add(new Box(i * 64, i * 64));
+            this.boxesVector.get(i).setTouchable(Touchable.enabled);
+            this.stage.addActor(this.boxesVector.get(i));
+        }
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        this.stage.act(Gdx.graphics.getDeltaTime());
+        this.stage.draw();
 
-        camera.update();
-
-        game.batch.setProjectionMatrix(camera.combined);
-        game.batch.begin();
-        game.batch.draw(img, rekt.x, rekt.y);
-        game.batch.end();
-
-        if(Gdx.input.isTouched()){
-            touchpos = new Vector3();
-            touchpos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchpos);
-            rekt.x = (int)touchpos.x - 64/2;
-            if(rekt.x < 0) rekt.x = 0;
-            if(rekt.x > 800 - 64) rekt.x = 800 - 64;
-        }
     }
 
     @Override
@@ -88,6 +81,6 @@ public class MainGameScreen implements Screen{
 
     @Override
     public void dispose() {
-        img.dispose();
+        //img.dispose();
     }
 }

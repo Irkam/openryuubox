@@ -1,9 +1,11 @@
-package net.orbitalchainsaw.openryuubox;
+package net.orbitalchainsaw.openryuubox.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+
+import net.orbitalchainsaw.openryuubox.OpenRyuuBox;
 
 /**
  * Created by Jean-Vincent on 13/10/2014.
@@ -20,7 +22,8 @@ public class MenuScreen implements Screen{
         camera.setToOrtho(false, 800, 480);
     }
 
-    @Override public void render(float delta){
+    @Override
+    public void render(float delta){
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
