@@ -8,41 +8,50 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
+import net.orbitalchainsaw.openryuubox.Panel;
+
 import java.awt.Rectangle;
 
 /**
  * Created by Jean-Vincent on 13/10/2014.
  */
-public class Box extends Actor{
-    protected Rectangle rectangle;
+public abstract class Box extends Actor{
+    public int x, y;
+    public int width = 64, height = 64;
     protected TextureRegion region;
+    protected Panel parentPanel = null;
 
     protected class BoxInputListener extends InputListener{
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-            ((Box)event.getTarget()).rectangle.x = (int) x;
-            ((Box)event.getTarget()).rectangle.y = (int) y;
+            Box box = ((Box)event.getTarget());
+            box.x += (int) x - box.width/2;
+            box.y += (int) y - box.height/2;
+            box.setBounds(box.x, box.y, box.width, box.height);
             return true;
         }
     }
 
     public Box(){
-        this.rectangle = new Rectangle(64, 64);
+        this.x = 0;
+        this.y = 0;
         this.region = new TextureRegion(new Texture("boxes/default.png"));
-        setBounds(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+        setBounds(this.x, this.y, this.width, this.height);
         addListener(new BoxInputListener());
     }
 
     public Box(int x, int y){
-        this.rectangle = new Rectangle(x, y, 64, 64);
+        this.x = x;
+        this.y = y;
         this.region = new TextureRegion(new Texture("boxes/default.png"));
-        setBounds(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+        setBounds(this.x, this.y, this.width, this.height);
         addListener(new BoxInputListener());
     }
 
-    public Box(Rectangle rectangle, TextureRegion region){
-        this.rectangle = rectangle;
+    public Box(int x, int y, TextureRegion region){
+        this.x = x;
+        this.y = y;
         this.region = region;
-        setBounds(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+        setBounds(this.x, this.y, this.width, this.height);
         addListener(new BoxInputListener());
     }
 
@@ -50,6 +59,9 @@ public class Box extends Actor{
     public void draw(Batch batch, float parentAlpha){
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a*parentAlpha);
-        batch.draw(region, this.rectangle.x, this.rectangle.y);
+        batch.draw(region, this.x, this.y);
     }
+
+    public void setParentPanel(Panel panel){this.parentPanel = panel;}
+    public Panel getParentPanel(){return this.parentPanel;}
 }

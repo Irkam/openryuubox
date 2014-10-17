@@ -3,19 +3,12 @@ package net.orbitalchainsaw.openryuubox.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 import net.orbitalchainsaw.openryuubox.OpenRyuuBox;
-import net.orbitalchainsaw.openryuubox.boxes.Box;
-import net.orbitalchainsaw.openryuubox.boxes.BoxesVector;
-
-import java.awt.Rectangle;
+import net.orbitalchainsaw.openryuubox.PanelContainer;
+import net.orbitalchainsaw.openryuubox.boxes.LitteralBox;
 
 /**
  * Created by Jean-Vincent on 13/10/2014.
@@ -23,13 +16,8 @@ import java.awt.Rectangle;
 public class MainGameScreen implements Screen{
     final OpenRyuuBox game;
 
-    private OrthographicCamera camera;
-    private Rectangle rekt;
-    Texture img;
-    Vector3 touchpos;
-
     private Stage stage;
-    private BoxesVector boxesVector;
+    private PanelContainer panelContainer;
 
     public MainGameScreen(final OpenRyuuBox game){
         this.game = game;
@@ -37,11 +25,13 @@ public class MainGameScreen implements Screen{
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        this.boxesVector = new BoxesVector();
+        this.panelContainer = new PanelContainer();
         for(int i = 0; i < 12; i++){
-            this.boxesVector.add(new Box(i * 64, i * 64));
-            this.boxesVector.get(i).setTouchable(Touchable.enabled);
-            this.stage.addActor(this.boxesVector.get(i));
+            LitteralBox newBox = new LitteralBox(i * 64, i * 128);
+            newBox.setParentPanel(this.panelContainer.leftPanel);
+            newBox.setTouchable(Touchable.enabled);
+            this.panelContainer.leftPanel.add(newBox);
+            this.stage.addActor(this.panelContainer.leftPanel.getBox(i));
         }
     }
 
@@ -81,6 +71,5 @@ public class MainGameScreen implements Screen{
 
     @Override
     public void dispose() {
-        //img.dispose();
     }
 }
