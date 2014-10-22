@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 
 import net.orbitalchainsaw.openryuubox.boxes.Box;
+import net.orbitalchainsaw.openryuubox.boxes.BoxContainer;
 import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
 
 import java.lang.reflect.InvocationTargetException;
@@ -37,41 +38,6 @@ public class BoxesBar extends ArrayList<Box> {
         this.y = y;
         this.width = width;
         this.height = height;
-
-        skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        skin.add("empty", new Texture("boxes/empty.png"));
-
-
-        Image validTargetImage = new Image(skin, "empty");
-        validTargetImage.setBounds(200, 50, 64, 64);
-        stage.addActor(validTargetImage);
-        Image invalidTargetImage = new Image(skin, "empty");
-        invalidTargetImage.setBounds(200, 200, 64, 64);
-        stage.addActor(invalidTargetImage);
-
-        dragAndDrop.addTarget(new Target(validTargetImage) {
-            public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
-                getActor().setColor(Color.GREEN);
-                return true;
-            }
-            public void reset (Source source, Payload payload) {
-                getActor().setColor(Color.WHITE);
-            }
-            public void drop (Source source, Payload payload, float x, float y, int pointer) {
-                System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
-            }
-        });
-        dragAndDrop.addTarget(new Target(invalidTargetImage) {
-            public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
-                getActor().setColor(Color.RED);
-                return false;
-            }
-            public void reset (Source source, Payload payload) {
-                getActor().setColor(Color.WHITE);
-            }
-            public void drop (Source source, Payload payload, float x, float y, int pointer) {
-            }
-        });
 
         for(Box box : boxes) {
             this.add(box);
@@ -119,11 +85,11 @@ public class BoxesBar extends ArrayList<Box> {
 
                 payload.setDragActor(boxActor);
 
-                Label validLabel = new Label("Some payload!", skin);
+                LiteralBox validLabel = new LiteralBox("delta");
                 validLabel.setColor(0, 1, 0, 1);
                 payload.setValidDragActor(validLabel);
 
-                Label invalidLabel = new Label("Some payload!", skin);
+                LiteralBox invalidLabel = new LiteralBox("delta");
                 invalidLabel.setColor(1, 0, 0, 1);
                 payload.setInvalidDragActor(invalidLabel);
 

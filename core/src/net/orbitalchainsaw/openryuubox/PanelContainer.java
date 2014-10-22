@@ -27,14 +27,14 @@ public class PanelContainer {
     }
 
     public PanelContainer(){
-        this(null, null, 0, 64, 800/2, 480/2, 800/2, 64, 800/2, 480/2);
+        this(null, null, 0, 64, 800/2, 480, 800/2, 64, 800/2, 480);
     }
 
     public PanelContainer(Box ... boxes){
-        this(null, null, 0, 64, 800/2, 480/2, 800/2, 64, 800/2, 480/2, boxes);
+        this(null, null, 0, 64, 800/2, 480, 800/2, 64, 800/2, 480, boxes);
     }
 
     public PanelContainer(Stage stage, DragAndDrop dragAndDrop, Box ... boxes){
-        this(stage, dragAndDrop, 0, 64, 800/2, 480/2, 800/2, 64, 800/2, 480/2, boxes);
+        this(stage, dragAndDrop, 0, 64, 800/2, 480, 800/2, 64, 800/2, 480, boxes);
     }
 }

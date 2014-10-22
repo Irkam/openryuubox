@@ -27,7 +27,7 @@ public abstract class Box extends Actor{
 
     public Box(int x, int y){
         this.region = new TextureRegion(new Texture("boxes/default.png"));
-        setBounds(0, 0, this.width, this.height);
+        setBounds(x, y, this.width, this.height);
     }
 
     public Box(int x, int y, TextureRegion region){

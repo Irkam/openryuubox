@@ -2,6 +2,7 @@ package net.orbitalchainsaw.openryuubox.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -11,6 +12,7 @@ import net.orbitalchainsaw.openryuubox.BoxesBar;
 import net.orbitalchainsaw.openryuubox.OpenRyuuBox;
 import net.orbitalchainsaw.openryuubox.Panel;
 import net.orbitalchainsaw.openryuubox.PanelContainer;
+import net.orbitalchainsaw.openryuubox.boxes.BoxContainer;
 import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
 
 /**
@@ -36,16 +38,10 @@ public class MainGameScreen implements Screen{
                 new Panel(stage, dragAndDrop, 800/2, 64, 800/2, 480/2),
                 new BoxesBar(stage, dragAndDrop, new LiteralBox("beta"), new LiteralBox("gamma")));
 
-        /*
-        for(int i = 0; i < 3; i++){
-            LiteralBox newBox = new LiteralBox("alpha");
-            newBox.setParentPanel(this.panelContainer.leftPanel);
-            newBox.setTouchable(Touchable.enabled);
-            this.panelContainer.leftPanel.add(newBox);
-        }
-        */
-
-
+        LiteralBox validBox = new LiteralBox(100, 180, "alpha");
+        this.panelContainer.leftPanel.add(validBox);
+        LiteralBox invalidBox = new LiteralBox(450, 180, "beta");
+        this.panelContainer.rightPanel.add(invalidBox);
     }
 
     @Override
