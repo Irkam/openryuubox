@@ -1,5 +1,8 @@
 package net.orbitalchainsaw.openryuubox;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+
 import net.orbitalchainsaw.openryuubox.boxes.Box;
 
 import java.util.ArrayList;
@@ -10,25 +13,23 @@ import java.util.ArrayList;
 public class Panel extends ArrayList<Box>{
     protected int x, y;
     int width, height;
+    protected Stage stage;
+    protected DragAndDrop dragAndDrop;
 
-    public Panel(int x, int y, int width, int height){
+    public Panel(Stage stage, DragAndDrop dragAndDrop,
+                 int x, int y, int width, int height){
+        this.stage = stage;
+        this.dragAndDrop = dragAndDrop;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
 
-    public Panel(int x, int y, int width, int height, ArrayList<Box> boxes){
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        for(Box box : boxes){
-            this.add(box);
-        }
-    }
+    public Panel(Stage stage, DragAndDrop dragAndDrop,
+                 int x, int y, int width, int height, ArrayList<Box> boxes){
+        this(stage, dragAndDrop, x, y, width, height);
 
-    public void addBoxes(Box ... boxes){
         for(Box box : boxes){
             this.add(box);
         }
@@ -39,8 +40,15 @@ public class Panel extends ArrayList<Box>{
     }
 
     public boolean isInBounds(Box box){
-        return isInBounds(box.x, box.y, box.width, box.height);
+        return isInBounds((int) box.getX(), (int) box.getY(), box.width, box.height);
     }
 
     public Box getBox(int i){return this.get(i);}
+
+    @Override
+    public boolean add(Box box){
+        this.stage.addActor(box);
+
+        return super.add(box);
+    }
 }
