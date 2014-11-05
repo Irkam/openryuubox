@@ -4,7 +4,7 @@ package net.orbitalchainsaw.openryuubox.boxes;
  * Created by Jean-Vincent on 14/10/2014.
  */
 public class NumericBox extends Box{
-    int value;
+    public int value;
 
     public NumericBox(int value){
         super();

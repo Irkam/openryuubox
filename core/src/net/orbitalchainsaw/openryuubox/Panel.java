@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 
 import net.orbitalchainsaw.openryuubox.boxes.Box;
 import net.orbitalchainsaw.openryuubox.boxes.BoxContainer;
+import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -106,7 +107,7 @@ public class Panel{
         this(stage, dragAndDrop, x, y, width, height);
     }
 
-    public void addContainer(BoxContainer boxContainer){
+    public void addContainer(final BoxContainer boxContainer){
         boxContainer.setParentPanel(this);
         this.stage.addActor(boxContainer);
         for(Actor actor : boxContainer.boxes)
@@ -121,14 +122,16 @@ public class Panel{
         stage.addActor(leftContainer);
         stage.addActor(bottomContainer);
 
-        for(Box innerBox : boxContainer.boxes)
+        for(final Box innerBox : boxContainer.boxes)
             dragAndDrop.addTarget(new DragAndDrop.Target(innerBox) {
                 /*
                 cible sur la boite pour les sommes
                  */
                 public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    getActor().setColor(Color.GREEN);
-                    return true;
+                    if(innerBox.type == Box.NUMERIC) {
+                        getActor().setColor(Color.GREEN);
+                        return true;
+                    }return false;
                 }
                 public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
                     getActor().setColor(Color.WHITE);
@@ -150,7 +153,7 @@ public class Panel{
                 getActor().setColor(Color.WHITE);
             }
             public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                System.out.println("toast");
+                boxContainer.addBox(new LiteralBox("gamma"));
             }
         });
 
@@ -166,7 +169,9 @@ public class Panel{
                 getActor().setColor(Color.WHITE);
             }
             public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                System.out.println("toast");
+                BoxContainer newBottom = new BoxContainer((int) boxContainer.getX(),
+                        (int) boxContainer.getY()-64);
+                boxContainer.addBottom(newBottom);
             }
         });
     }
