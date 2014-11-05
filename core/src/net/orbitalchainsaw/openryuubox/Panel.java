@@ -16,9 +16,9 @@ import java.util.ArrayList;
  */
 public class Panel{
     protected int x, y, width, height;
-    protected DragAndDrop dragAndDrop;
     protected Actor panelTarget;
     public Stage stage;
+    public DragAndDrop dragAndDrop;
     public ArrayList<BoxContainer> boxContainers, boxDaDTargets;
 
     public Panel(final Stage stage, final DragAndDrop dragAndDrop,
@@ -39,74 +39,61 @@ public class Panel{
         boxContainers = new ArrayList<BoxContainer>();
         boxDaDTargets = new ArrayList<BoxContainer>();
 
-        dragAndDrop.addTarget(new DragAndDrop.Target(panelTarget) {
-            public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload,
-                                 float x, float y, int pointer) {
-                for(Box boxContainer : boxContainers){
-                    BoxContainer leftContainer = new BoxContainer((int) boxContainer.getX() - 64, (int) boxContainer.getY());
-                    BoxContainer bottomContainer = new BoxContainer((int) boxContainer.getX(), (int) boxContainer.getY() - 64);
 
-                    boxDaDTargets.add(leftContainer);
-                    boxDaDTargets.add(bottomContainer);
-                    stage.addActor(leftContainer);
-                    stage.addActor(bottomContainer);
+        for(Box boxContainer : boxContainers){
+            BoxContainer leftContainer = new BoxContainer((int) boxContainer.getX() - 64, (int) boxContainer.getY());
+            BoxContainer bottomContainer = new BoxContainer((int) boxContainer.getX(), (int) boxContainer.getY() - 64);
 
-                    /*
-                    cible sur la boite pour les sommes
-                     */
-                    dragAndDrop.addTarget(new DragAndDrop.Target(boxContainer) {
-                        public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                            getActor().setColor(Color.GREEN);
-                            return false;
-                        }
-                        public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                            getActor().setColor(Color.WHITE);
-                        }
-                        public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                        }
-                    });
+            boxDaDTargets.add(leftContainer);
+            boxDaDTargets.add(bottomContainer);
+            stage.addActor(leftContainer);
+            stage.addActor(bottomContainer);
 
-                    /*
-                    cible à gauche de la boite pour les produits
-                     */
-                    dragAndDrop.addTarget(new DragAndDrop.Target(leftContainer) {
-                        public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                            getActor().setColor(Color.GREEN);
-                            return false;
-                        }
-                        public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                            getActor().setColor(Color.WHITE);
-                        }
-                        public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                        }
-                    });
-
-                    /*
-                    cible en-dessous de la boite pour les divisions
-                     */
-                    dragAndDrop.addTarget(new DragAndDrop.Target(bottomContainer) {
-                        public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                            getActor().setColor(Color.GREEN);
-                            return false;
-                        }
-                        public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                            getActor().setColor(Color.WHITE);
-                        }
-                        public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                        }
-                    });
+            /*
+            cible sur la boite pour les sommes
+             */
+            dragAndDrop.addTarget(new DragAndDrop.Target(boxContainer) {
+                public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                    getActor().setColor(Color.GREEN);
+                    return false;
                 }
+                public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
+                    getActor().setColor(Color.WHITE);
+                }
+                public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                }
+            });
 
-                return false;
-            }
-            public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                for(BoxContainer boxContainer : boxDaDTargets)
-                    boxContainer.remove();
-                boxDaDTargets.clear();
-            }
-            public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-            }
-        });
+            /*
+            cible à gauche de la boite pour les produits
+             */
+            dragAndDrop.addTarget(new DragAndDrop.Target(leftContainer) {
+                public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                    getActor().setColor(Color.GREEN);
+                    return false;
+                }
+                public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
+                    getActor().setColor(Color.WHITE);
+                }
+                public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                }
+            });
+
+            /*
+            cible en-dessous de la boite pour les divisions
+             */
+            dragAndDrop.addTarget(new DragAndDrop.Target(bottomContainer) {
+                public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                    getActor().setColor(Color.GREEN);
+                    return false;
+                }
+                public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
+                    getActor().setColor(Color.WHITE);
+                }
+                public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                }
+            });
+        }
     }
 
     public Panel(Stage stage, DragAndDrop dragAndDrop,
@@ -119,13 +106,69 @@ public class Panel{
         this(stage, dragAndDrop, x, y, width, height);
     }
 
-    public void addContainer(BoxContainer bc){
-        bc.setParentPanel(this);
-        this.stage.addActor(bc);
-        for(Actor actor : bc.boxes)
+    public void addContainer(BoxContainer boxContainer){
+        boxContainer.setParentPanel(this);
+        this.stage.addActor(boxContainer);
+        for(Actor actor : boxContainer.boxes)
             this.stage.addActor(actor);
-        this.boxContainers.add(bc);
+        this.boxContainers.add(boxContainer);
 
+        BoxContainer leftContainer = new BoxContainer((int) boxContainer.getX() - 64, (int) boxContainer.getY());
+        BoxContainer bottomContainer = new BoxContainer((int) boxContainer.getX(), (int) boxContainer.getY() - 64);
+
+        boxDaDTargets.add(leftContainer);
+        boxDaDTargets.add(bottomContainer);
+        stage.addActor(leftContainer);
+        stage.addActor(bottomContainer);
+
+        for(Box innerBox : boxContainer.boxes)
+            dragAndDrop.addTarget(new DragAndDrop.Target(innerBox) {
+                /*
+                cible sur la boite pour les sommes
+                 */
+                public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                    getActor().setColor(Color.GREEN);
+                    return true;
+                }
+                public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
+                    getActor().setColor(Color.WHITE);
+                }
+                public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                    System.out.println("toast");
+                }
+            });
+
+            /*
+            cible à gauche de la boite pour les produits
+             */
+        dragAndDrop.addTarget(new DragAndDrop.Target(leftContainer) {
+            public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                getActor().setColor(Color.GREEN);
+                return true;
+            }
+            public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
+                getActor().setColor(Color.WHITE);
+            }
+            public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                System.out.println("toast");
+            }
+        });
+
+            /*
+            cible en-dessous de la boite pour les divisions
+             */
+        dragAndDrop.addTarget(new DragAndDrop.Target(bottomContainer) {
+            public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                getActor().setColor(Color.GREEN);
+                return true;
+            }
+            public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
+                getActor().setColor(Color.WHITE);
+            }
+            public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                System.out.println("toast");
+            }
+        });
     }
 
     public boolean isInBounds(int x, int y, int width, int height){

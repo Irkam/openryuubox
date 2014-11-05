@@ -8,11 +8,13 @@ public class LiteralBox extends Box{
 
     public LiteralBox(String name){
         super();
+        type = Box.LITERAL;
         this.name = name;
     }
 
     public LiteralBox(int x, int y, String name){
         super(x, y);
+        type = Box.LITERAL;
         this.name = name;
     }
 }

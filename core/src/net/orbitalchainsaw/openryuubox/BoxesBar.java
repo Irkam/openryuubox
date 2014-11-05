@@ -1,20 +1,11 @@
 package net.orbitalchainsaw.openryuubox;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 
 import net.orbitalchainsaw.openryuubox.boxes.Box;
-import net.orbitalchainsaw.openryuubox.boxes.BoxContainer;
 import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,7 +19,6 @@ public class BoxesBar extends ArrayList<Box> {
     int width, height;
     Stage stage;
     DragAndDrop dragAndDrop;
-    final Skin skin = new Skin();
 
     public BoxesBar(Stage stage, DragAndDrop dragAndDrop,
                     int x, int y, int width, int height, Box ... boxes){
@@ -64,38 +54,7 @@ public class BoxesBar extends ArrayList<Box> {
     @Override
     public boolean add(final Box newBox){
         this.stage.addActor(newBox);
-        this.dragAndDrop.addSource(new DragAndDrop.Source(newBox) {
-            Box boxActor = newBox;
-            @Override
-            public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
-                Payload payload = new Payload();
-                payload.setObject(getActor());
-
-                try {
-                    boxActor = (Box) getActor().getClass().getConstructor(String.class).newInstance("omega");
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-
-                payload.setDragActor(boxActor);
-
-                LiteralBox validLabel = new LiteralBox("delta");
-                validLabel.setColor(0, 1, 0, 1);
-                payload.setValidDragActor(validLabel);
-
-                LiteralBox invalidLabel = new LiteralBox("delta");
-                invalidLabel.setColor(1, 0, 0, 1);
-                payload.setInvalidDragActor(invalidLabel);
-
-                return payload;
-            }
-        });
+        this.dragAndDrop.addSource(new BoxSource(newBox));
 
         super.add(newBox);
 
