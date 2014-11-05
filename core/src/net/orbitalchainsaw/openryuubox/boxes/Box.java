@@ -26,12 +26,12 @@ public abstract class Box extends Actor{
     protected Panel parentPanel = null;
 
     public Box(){
-        this.region = new TextureRegion(new Texture("boxes/default.png"));
+        this.region = new TextureRegion(new Texture("boxes/cochon1.png"));
         setBounds(0, 0, this.width, this.height);
     }
 
     public Box(int x, int y){
-        this.region = new TextureRegion(new Texture("boxes/default.png"));
+        this.region = new TextureRegion(new Texture("boxes/de1.png"));
         setBounds(x, y, this.width, this.height);
     }
 

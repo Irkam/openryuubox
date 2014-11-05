@@ -1,0 +1,39 @@
+{
+    "dock":[
+        {"type": "numeric", "value": 1},
+        {"type": "literal", "value": "alpha"},
+        {"type": "literal", "value": "beta"},
+    ],
+
+    "lpanel":[
+        "container":{
+            "boxes": [
+                {"type": "literal", "value": "alpha"},
+                {"type": "literal", "value": "beta"},
+            ],
+            "container": {
+                "boxes": [
+                    {"literal", "gamma"},
+                ],
+                "container": null,
+            }
+        },
+
+    ],
+
+    "rpanel":[
+        "container":{
+            "boxes": [
+                {"type": "unknown"},
+                {"type": "literal", "value": "beta"},
+            ],
+            "container": null,
+        },
+        "container":{
+            "boxes": [
+                {"literal", "gamma"},
+            ],
+            "container" : null,
+        }
+    ],
+}

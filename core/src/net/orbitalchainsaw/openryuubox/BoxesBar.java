@@ -1,14 +1,11 @@
 package net.orbitalchainsaw.openryuubox;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 
 import net.orbitalchainsaw.openryuubox.boxes.Box;
-import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
+import net.orbitalchainsaw.openryuubox.draganddrop.BoxSource;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
