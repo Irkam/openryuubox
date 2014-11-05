@@ -2,13 +2,18 @@ package net.orbitalchainsaw.openryuubox.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 
+import net.orbitalchainsaw.openryuubox.BoxesBar;
 import net.orbitalchainsaw.openryuubox.OpenRyuuBox;
+import net.orbitalchainsaw.openryuubox.Panel;
 import net.orbitalchainsaw.openryuubox.PanelContainer;
-import net.orbitalchainsaw.openryuubox.boxes.LitteralBox;
+import net.orbitalchainsaw.openryuubox.boxes.BoxContainer;
+import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
 
 /**
  * Created by Jean-Vincent on 13/10/2014.
@@ -19,20 +24,27 @@ public class MainGameScreen implements Screen{
     private Stage stage;
     private PanelContainer panelContainer;
 
+    DragAndDrop dragAndDrop;
+
     public MainGameScreen(final OpenRyuuBox game){
         this.game = game;
 
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        this.panelContainer = new PanelContainer();
-        for(int i = 0; i < 12; i++){
-            LitteralBox newBox = new LitteralBox(i * 64, i * 128);
-            newBox.setParentPanel(this.panelContainer.leftPanel);
-            newBox.setTouchable(Touchable.enabled);
-            this.panelContainer.leftPanel.add(newBox);
-            this.stage.addActor(this.panelContainer.leftPanel.getBox(i));
-        }
+        dragAndDrop = new DragAndDrop();
+
+        this.panelContainer = new PanelContainer(new Panel(stage, dragAndDrop, 0, 64, 800/2, 480),
+                new Panel(stage, dragAndDrop, 800/2, 64, 800/2, 480),
+                new BoxesBar(stage, dragAndDrop, new LiteralBox("beta"), new LiteralBox("gamma")));
+
+        BoxContainer firstContainer = new BoxContainer(100, 180);
+        firstContainer.addBox(new LiteralBox(100, 180, "alpha"));
+        this.panelContainer.leftPanel.addContainer(firstContainer);
+
+        BoxContainer secondContainer = new BoxContainer(450, 180);
+        secondContainer.addBox(new LiteralBox(450, 180, "beta"));
+        this.panelContainer.rightPanel.addContainer(secondContainer);
     }
 
     @Override
