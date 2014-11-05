@@ -16,6 +16,11 @@ import java.awt.Rectangle;
  * Created by Jean-Vincent on 13/10/2014.
  */
 public abstract class Box extends Actor{
+    public static final int UNKNOWN = 0;
+    public static final int LITERAL = 1;
+    public static final int NUMERIC = 2;
+
+    public int type;
     public int width = 64, height = 64;
     protected TextureRegion region;
     protected Panel parentPanel = null;
