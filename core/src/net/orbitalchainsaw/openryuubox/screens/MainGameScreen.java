@@ -34,8 +34,8 @@ public class MainGameScreen implements Screen{
 
         dragAndDrop = new DragAndDrop();
 
-        this.panelContainer = new PanelContainer(new Panel(stage, dragAndDrop, 0, 64, 800/2, 480/2),
-                new Panel(stage, dragAndDrop, 800/2, 64, 800/2, 480/2),
+        this.panelContainer = new PanelContainer(new Panel(stage, dragAndDrop, 0, 64, 800/2, 480),
+                new Panel(stage, dragAndDrop, 800/2, 64, 800/2, 480),
                 new BoxesBar(stage, dragAndDrop, new LiteralBox("beta"), new LiteralBox("gamma")));
 
         BoxContainer firstContainer = new BoxContainer(100, 180);
