@@ -38,10 +38,13 @@ public class MainGameScreen implements Screen{
                 new Panel(stage, dragAndDrop, 800/2, 64, 800/2, 480/2),
                 new BoxesBar(stage, dragAndDrop, new LiteralBox("beta"), new LiteralBox("gamma")));
 
-        LiteralBox validBox = new LiteralBox(100, 180, "alpha");
-        this.panelContainer.leftPanel.add(validBox);
-        LiteralBox invalidBox = new LiteralBox(450, 180, "beta");
-        this.panelContainer.rightPanel.add(invalidBox);
+        BoxContainer firstContainer = new BoxContainer(100, 180);
+        firstContainer.addBox(new LiteralBox(100, 180, "alpha"));
+        this.panelContainer.leftPanel.addContainer(firstContainer);
+
+        BoxContainer secondContainer = new BoxContainer(450, 180);
+        secondContainer.addBox(new LiteralBox(450, 180, "beta"));
+        this.panelContainer.rightPanel.addContainer(secondContainer);
     }
 
     @Override
