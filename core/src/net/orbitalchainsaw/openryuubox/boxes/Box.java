@@ -20,7 +20,6 @@ public abstract class Box extends Actor{
     public int width = 64, height = 64;
     protected TextureRegion region;
     protected Panel parentPanel = null;
-
     protected class BoxInputListener extends InputListener{
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
             Box box = ((Box)event.getTarget());
