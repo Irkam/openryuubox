@@ -15,8 +15,8 @@ public class PanelContainer {
 
     public PanelContainer(Stage stage, DragAndDrop dragAndDrop, int leftX, int leftY, int leftW, int leftH,
                           int rightX, int rightY, int rightW, int rightH, Box... boxes){
-        this.leftPanel = new Panel(stage, dragAndDrop, leftX, leftY, leftW, leftH, null);
-        this.rightPanel = new Panel(stage, dragAndDrop, rightX, rightY, rightW, rightH, null);
+        this.leftPanel = new Panel(stage, dragAndDrop, leftX, leftY, leftW, leftH);
+        this.rightPanel = new Panel(stage, dragAndDrop, rightX, rightY, rightW, rightH);
         this.boxesBar = new BoxesBar(stage, dragAndDrop, boxes);
     }
 

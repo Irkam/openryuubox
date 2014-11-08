@@ -41,13 +41,13 @@ public class BoxSource extends Source {
         Box validBox, invalidBox;
 
         if(box.type == Box.LITERAL){
-            payload.setDragActor(new LiteralBox(((LiteralBox)box).name));
+            payload.setDragActor(new LiteralBox(((LiteralBox)box).value));
 
-            validBox = new LiteralBox(((LiteralBox)box).name);
+            validBox = new LiteralBox(((LiteralBox)box).value);
             validBox.setColor(0, 1, 0, 1);
             payload.setValidDragActor(validBox);
 
-            invalidBox = new LiteralBox(((LiteralBox)box).name);
+            invalidBox = new LiteralBox(((LiteralBox)box).value);
             invalidBox.setColor(1, 0, 0, 1);
             payload.setInvalidDragActor(invalidBox);
         }else{

@@ -14,6 +14,7 @@ import net.orbitalchainsaw.openryuubox.Panel;
 import net.orbitalchainsaw.openryuubox.PanelContainer;
 import net.orbitalchainsaw.openryuubox.boxes.BoxContainer;
 import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
+import net.orbitalchainsaw.openryuubox.boxes.NumericBox;
 
 /**
  * Created by Jean-Vincent on 13/10/2014.
@@ -36,14 +37,17 @@ public class MainGameScreen implements Screen{
 
         this.panelContainer = new PanelContainer(new Panel(stage, dragAndDrop, 0, 64, 800/2, 480),
                 new Panel(stage, dragAndDrop, 800/2, 64, 800/2, 480),
-                new BoxesBar(stage, dragAndDrop, new LiteralBox("beta"), new LiteralBox("gamma")));
+                new BoxesBar(stage, dragAndDrop,
+                        new LiteralBox(LiteralBox.ALPHA),
+                        new NumericBox(2),
+                        new NumericBox(-1)));
 
-        BoxContainer firstContainer = new BoxContainer(100, 180);
-        firstContainer.addBox(new LiteralBox(100, 180, "alpha"));
+        BoxContainer firstContainer = new BoxContainer(200, 180);
+        firstContainer.addBox(new NumericBox(1));
         this.panelContainer.leftPanel.addContainer(firstContainer);
 
-        BoxContainer secondContainer = new BoxContainer(450, 180);
-        secondContainer.addBox(new LiteralBox(450, 180, "beta"));
+        BoxContainer secondContainer = new BoxContainer(550, 280);
+        secondContainer.addBox(new NumericBox(3));
         this.panelContainer.rightPanel.addContainer(secondContainer);
     }
 

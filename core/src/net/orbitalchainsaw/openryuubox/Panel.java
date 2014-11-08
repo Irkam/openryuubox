@@ -7,9 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 
 import net.orbitalchainsaw.openryuubox.boxes.Box;
 import net.orbitalchainsaw.openryuubox.boxes.BoxContainer;
+import net.orbitalchainsaw.openryuubox.boxes.EmptyBox;
 import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
+import net.orbitalchainsaw.openryuubox.boxes.NumericBox;
+import net.orbitalchainsaw.openryuubox.draganddrop.InnerBoxTarget;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +22,7 @@ public class Panel{
     protected Actor panelTarget;
     public Stage stage;
     public DragAndDrop dragAndDrop;
-    public ArrayList<BoxContainer> boxContainers, boxDaDTargets;
+    public ArrayList<Box> boxContainers, boxDaDTargets;
 
     public Panel(final Stage stage, final DragAndDrop dragAndDrop,
                  int x, int y, int width, int height){
@@ -34,77 +36,8 @@ public class Panel{
         panelTarget.setBounds(x, y, width, height);
         stage.addActor(panelTarget);
 
-        /*
-        TODO: ajouter les actions drag&drop pour ajouter les Target à côté de chaque Box
-         */
-        boxContainers = new ArrayList<BoxContainer>();
-        boxDaDTargets = new ArrayList<BoxContainer>();
-
-
-        for(Box boxContainer : boxContainers){
-            BoxContainer leftContainer = new BoxContainer((int) boxContainer.getX() - 64, (int) boxContainer.getY());
-            BoxContainer bottomContainer = new BoxContainer((int) boxContainer.getX(), (int) boxContainer.getY() - 64);
-
-            boxDaDTargets.add(leftContainer);
-            boxDaDTargets.add(bottomContainer);
-            stage.addActor(leftContainer);
-            stage.addActor(bottomContainer);
-
-            /*
-            cible sur la boite pour les sommes
-             */
-            dragAndDrop.addTarget(new DragAndDrop.Target(boxContainer) {
-                public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    getActor().setColor(Color.GREEN);
-                    return false;
-                }
-                public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                    getActor().setColor(Color.WHITE);
-                }
-                public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                }
-            });
-
-            /*
-            cible à gauche de la boite pour les produits
-             */
-            dragAndDrop.addTarget(new DragAndDrop.Target(leftContainer) {
-                public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    getActor().setColor(Color.GREEN);
-                    return false;
-                }
-                public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                    getActor().setColor(Color.WHITE);
-                }
-                public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                }
-            });
-
-            /*
-            cible en-dessous de la boite pour les divisions
-             */
-            dragAndDrop.addTarget(new DragAndDrop.Target(bottomContainer) {
-                public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    getActor().setColor(Color.GREEN);
-                    return false;
-                }
-                public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                    getActor().setColor(Color.WHITE);
-                }
-                public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                }
-            });
-        }
-    }
-
-    public Panel(Stage stage, DragAndDrop dragAndDrop,
-                 int x, int y, int width, int height, ArrayList<Box> boxes){
-        /*
-        for(Box box : boxes){
-            this.add(box);
-        }
-        */
-        this(stage, dragAndDrop, x, y, width, height);
+        boxContainers = new ArrayList<Box>();
+        boxDaDTargets = new ArrayList<Box>();
     }
 
     public void addContainer(final BoxContainer boxContainer){
@@ -114,36 +47,16 @@ public class Panel{
             this.stage.addActor(actor);
         this.boxContainers.add(boxContainer);
 
-        BoxContainer leftContainer = new BoxContainer((int) boxContainer.getX() - 64, (int) boxContainer.getY());
-        BoxContainer bottomContainer = new BoxContainer((int) boxContainer.getX(), (int) boxContainer.getY() - 64);
-
-        boxDaDTargets.add(leftContainer);
-        boxDaDTargets.add(bottomContainer);
-        stage.addActor(leftContainer);
-        stage.addActor(bottomContainer);
-
         for(final Box innerBox : boxContainer.boxes)
-            dragAndDrop.addTarget(new DragAndDrop.Target(innerBox) {
-                /*
-                cible sur la boite pour les sommes
-                 */
-                public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    if(innerBox.type == Box.NUMERIC) {
-                        getActor().setColor(Color.GREEN);
-                        return true;
-                    }return false;
-                }
-                public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                    getActor().setColor(Color.WHITE);
-                }
-                public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    System.out.println("toast");
-                }
-            });
+            dragAndDrop.addTarget(new InnerBoxTarget(innerBox, boxContainer));
 
-            /*
-            cible à gauche de la boite pour les produits
-             */
+        /*
+        cible à gauche de la boite pour les produits
+         */
+        EmptyBox leftContainer = boxContainer.getLeftTarget();
+        boxDaDTargets.add(leftContainer);
+        stage.addActor(leftContainer);
+
         dragAndDrop.addTarget(new DragAndDrop.Target(leftContainer) {
             public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
                 getActor().setColor(Color.GREEN);
@@ -153,27 +66,60 @@ public class Panel{
                 getActor().setColor(Color.WHITE);
             }
             public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                boxContainer.addBox(new LiteralBox("gamma"));
+                Box payloadBox = (Box) payload.getObject();
+                switch(payloadBox.type){
+                    case Box.LITERAL:
+                        boxContainer.addBox(new LiteralBox(payloadBox.value));
+                        break;
+                    case Box.NUMERIC:
+                        boxContainer.addBox(new NumericBox(payloadBox.value));
+                        break;
+                    default:
+                        System.out.println("ajout d'une boite merdeuse");
+                }
+
             }
         });
 
-            /*
-            cible en-dessous de la boite pour les divisions
-             */
-        dragAndDrop.addTarget(new DragAndDrop.Target(bottomContainer) {
-            public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                getActor().setColor(Color.GREEN);
-                return true;
-            }
-            public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                getActor().setColor(Color.WHITE);
-            }
-            public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                BoxContainer newBottom = new BoxContainer((int) boxContainer.getX(),
-                        (int) boxContainer.getY()-64);
-                boxContainer.addBottom(newBottom);
-            }
-        });
+        /*
+        cible en-dessous de la boite pour les divisions
+         */
+        if(boxContainer.getParentBoxContainer() == null) {
+            //Ne pas ajouter la cible pour créer une nouvelle fraction si le BoxContainer est déjà le dénominateur d'une fraction
+            EmptyBox bottomContainer = boxContainer.getBottomTarget();
+            boxDaDTargets.add(bottomContainer);
+            stage.addActor(bottomContainer);
+
+            dragAndDrop.addTarget(new DragAndDrop.Target(bottomContainer) {
+                public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                    getActor().setColor(Color.GREEN);
+                    return true;
+                }
+
+                public void reset(DragAndDrop.Source source, DragAndDrop.Payload payload) {
+                    getActor().setColor(Color.WHITE);
+                }
+
+                public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                    BoxContainer newBottom = new BoxContainer((int) boxContainer.getX(),
+                            (int) boxContainer.getY() - 64);
+                    boxContainer.addBottom(newBottom);
+
+                    Box payloadBox = (Box) payload.getObject();
+                    switch(payloadBox.type){
+                        case Box.LITERAL:
+                            newBottom.addBox(new LiteralBox(payloadBox.value));
+                            break;
+                        case Box.NUMERIC:
+                            newBottom.addBox(new NumericBox(payloadBox.value));
+                            break;
+                        default:
+                            System.out.println("ajout d'une boite merdeuse");
+                    }
+                    newBottom.getParentPanel().addContainer(newBottom);
+                }
+            });
+        }
     }
 
     public boolean isInBounds(int x, int y, int width, int height){

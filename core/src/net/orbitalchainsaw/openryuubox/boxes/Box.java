@@ -16,28 +16,35 @@ import java.awt.Rectangle;
  * Created by Jean-Vincent on 13/10/2014.
  */
 public abstract class Box extends Actor{
+    protected static final String BOX_TEXTURE_FOLDER = "boxes/";
+    protected static final String BOX_TEXTURE_DEFAULT = BOX_TEXTURE_FOLDER + "default.png";
     public static final int UNKNOWN = 0;
     public static final int LITERAL = 1;
     public static final int NUMERIC = 2;
 
-    public int type;
+    public int type, value;
     public int width = 64, height = 64;
     protected TextureRegion region;
     protected Panel parentPanel = null;
 
     public Box(){
-        this.region = new TextureRegion(new Texture("boxes/cochon1.png"));
+        this.region = new TextureRegion(new Texture(BOX_TEXTURE_DEFAULT));
         setBounds(0, 0, this.width, this.height);
     }
 
     public Box(int x, int y){
-        this.region = new TextureRegion(new Texture("boxes/de1.png"));
+        this.region = new TextureRegion(new Texture("boxes/default.png"));
         setBounds(x, y, this.width, this.height);
     }
 
     public Box(int x, int y, TextureRegion region){
         this.region = region;
         setBounds(x, y, this.width, this.height);
+    }
+
+    public Box(TextureRegion region){
+        this.region = region;
+        setBounds(0, 0, width, height);
     }
 
     @Override
