@@ -57,7 +57,7 @@ public class BoxesBar extends ArrayList<Box> {
 
         int i=0;
         for(Box box : this){
-            box.setCoord(getBoxX(i++), 0);
+            box.setCoord(getBoxX(i++), 32);
         }
 
         return true;
