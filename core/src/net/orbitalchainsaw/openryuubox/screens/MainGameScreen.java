@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 
 import net.orbitalchainsaw.openryuubox.BoxesBar;
+import net.orbitalchainsaw.openryuubox.JSONLevelGenerator;
 import net.orbitalchainsaw.openryuubox.OpenRyuuBox;
 import net.orbitalchainsaw.openryuubox.Panel;
 import net.orbitalchainsaw.openryuubox.PanelContainer;
@@ -36,25 +37,7 @@ public class MainGameScreen implements Screen{
 
         dragAndDrop = new DragAndDrop();
 
-        this.panelContainer = new PanelContainer(new Panel(stage, dragAndDrop, 0, 64, 800/2, 480),
-                new Panel(stage, dragAndDrop, 800/2, 64, 800/2, 480),
-                new BoxesBar(stage, dragAndDrop,
-                        new LiteralBox(LiteralBox.ALPHA),
-                        new NumericBox(2),
-                        new NumericBox(-1)));
-
-        BoxContainer firstContainer = new BoxContainer(200, 180);
-        firstContainer.addBox(new NumericBox(1));
-        firstContainer.addBox(new UnknownBox());
-        this.panelContainer.leftPanel.addContainer(firstContainer);
-
-        BoxContainer secondContainer = new BoxContainer(550, 280);
-        secondContainer.addBox(new NumericBox(3));
-        this.panelContainer.rightPanel.addContainer(secondContainer);
-
-        BoxContainer thirdContainer = new BoxContainer(700, 380);
-        thirdContainer.addBox(new NumericBox(4));
-        this.panelContainer.rightPanel.addContainer(thirdContainer);
+        JSONLevelGenerator.parseLevelJSON("levels/level0.json", stage, dragAndDrop);
     }
 
     @Override

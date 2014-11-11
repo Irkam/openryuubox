@@ -2,6 +2,7 @@ package net.orbitalchainsaw.openryuubox.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import net.orbitalchainsaw.openryuubox.OpenRyuuBox;
 
 public class DesktopLauncher {
@@ -10,6 +11,6 @@ public class DesktopLauncher {
         config.title="OpenRyuuBox";
         config.width=800;
         config.height=480;
-		new LwjglApplication(new OpenRyuuBox(), config);
+        new LwjglApplication(new OpenRyuuBox(), config);
 	}
 }
