@@ -32,14 +32,14 @@ public class JsonFileRead {
         boxesBar = new BoxesBar();
     }
 
-    public void parser(String file) {
+    public void parser(String file) throws JSONException{
         FileHandle jsonFile = Gdx.files.internal(file);
-        String text = jsonFile.readString();
+       // String text = jsonFile.readString();
 
-        System.out.print(text);
-
-        boolean isExt = Gdx.files.isExternalStorageAvailable();
-
+        JSONObject object = new JSONObject(jsonFile);
+        JSONArray dock = object.getJSONArray("dock");
+        JSONArray lpanel = object.getJSONArray("lpanel");
+        JSONArray rpanel = object.getJSONArray("rpanel");
     }
     /*
     public PanelContainer parser(Context context, int fichier) throws JSONException {
