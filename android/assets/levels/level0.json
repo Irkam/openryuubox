@@ -2,38 +2,40 @@
     "dock":[
         {"type": "numeric", "value": 1},
         {"type": "literal", "value": "alpha"},
-        {"type": "literal", "value": "beta"},
+        {"type": "literal", "value": "beta"}
     ],
 
     "lpanel":[
-        "container":{
-            "boxes": [
-                {"type": "literal", "value": "alpha"},
-                {"type": "literal", "value": "beta"},
-            ],
-            "container": {
+        {
+            "boxes":[
+                {"type": "literal", "value": "a"},
+                {"type": "literal", "value": "b"}],
+            "child":{
                 "boxes": [
-                    {"literal", "gamma"},
-                ],
-                "container": null,
-            }
-        },
-
+                    {"type": "literal", "value": "c"}],
+                "child": null,
+                "options": null
+            },            
+            "options":[
+                {"x": 120, "y": 120}
+            ]
+        }
     ],
 
     "rpanel":[
-        "container":{
-            "boxes": [
-                {"type": "unknown"},
-                {"type": "literal", "value": "beta"},
-            ],
-            "container": null,
-        },
-        "container":{
-            "boxes": [
-                {"literal", "gamma"},
-            ],
-            "container" : null,
+        {
+            "boxes":[
+                {"type": "literal", "value": "a"},
+                {"type": "literal", "value": "b"}],
+            "child":{
+                "boxes": [
+                    {"type": "literal", "value": "c"}],
+                "child": null,
+                "options": null
+            },            
+            "options":[
+                {"x": 120, "y": 120}
+            ]
         }
-    ],
+    ]
 }
