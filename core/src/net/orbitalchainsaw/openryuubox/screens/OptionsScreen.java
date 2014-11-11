@@ -2,11 +2,14 @@ package net.orbitalchainsaw.openryuubox.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -20,18 +23,28 @@ import net.orbitalchainsaw.openryuubox.OpenRyuuBox;
  */
 public class OptionsScreen implements Screen {
     final OpenRyuuBox game;
-    OrthographicCamera camera;
+    private Texture background;
+    private OrthographicCamera camera;
+    private Skin skinLibgdx = new Skin(Gdx.files.internal("mainscreenui/uiskin.json"));
+    private CheckBox chkSound = new CheckBox("Son", skinLibgdx);
 
-    Skin skinLibgdx = new Skin(Gdx.files.internal("mainscreenui/uiskin.json"));
-
-
-    CheckBox chkSound = new CheckBox("Son", skinLibgdx);
-    TextButton save = new TextButton("Sauvegarder", skinLibgdx);
-    TextButton quit = new TextButton("Quitter", skinLibgdx);
-
-
+    private TextButton quit = new TextButton("Quitter", skinLibgdx);
     private Stage stage = new Stage();
     private Table table = new Table();
+
+    private Label label1 = new Label("C est quoi ?\n" + "\n" +
+            "OPEN RYUU BOX est inspire d une méthode norvégienne pour s initier a la resolution d equations mathematiques. \n", skinLibgdx);
+
+    private Label label2 = new Label ("Tous les détails\n" + "\n" +
+            "Open Ryuu Box est compose d une seule difficulte. \n" +
+            "Le but (et c est la seule chose qu il faut toujours vraiment garder a l esprit), c est d isoler la boite d un cote de l ecran. \n" +
+            "Ce jeu permet egalement de creer ses propre niveaux.\n" +
+            "L ecran est divise en deux cotes. " +
+            "D un cote se trouve une boite. Des deux cotes se trouvent differentes cartes.\n " +
+            "Pour reussir un niveau, il faut isoler la boite d un cote, et simplifier au maximum les cartes se trouvant de l autre cote.\n" +
+            " On retrouve bien le principe de la resolution d equation du premier degre a une inconnue : la boite c est x, l’inconnue.\n " +
+            "Il faut bien, pour resoudre une equation, isoler x d un cote du signe =, pour trouver combien vaut x.\n" +
+            "Et il faut bien simplifier au maximum l expression de cette equivalence.\n ", skinLibgdx);
 
     public OptionsScreen(final OpenRyuuBox game){
         this.game = game;
@@ -54,11 +67,20 @@ public class OptionsScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        label1.setPosition(400, 400);
+        label1.setColor(Color.BLACK);
+        label1.setFontScale(0.8f);
+
+
+        label2.setPosition(400, 400);
+        label2.setColor(Color.BLACK);
+        label2.setFontScale(0.8f);
+
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.font.draw(game.batch, "Options", 100, 150);
+        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());//corrige sans caméra !!
         game.batch.end();
 
         stage.act(delta);
@@ -70,36 +92,23 @@ public class OptionsScreen implements Screen {
     }
 
     public void show() {
-        table.add(chkSound).size(40,40).padBottom(10).row();
-        table.add(save).size(150,60).padTop(50).row();
-        table.add(quit).size(150,60).padBottom(50).row();
+        table.add(label1).row();
+        table.add(label2).row();
 
-
-        save.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                saveSettings();
-                onQuitClicked();
-            }
-        });
+        table.add(quit).size(100,60).padBottom(10).row();
+        background = new Texture(Gdx.files.internal("boxes/REGLES.png"));
 
         quit.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
-            onQuitClicked();
+                game.setScreen(new MenuScreen(game));
+                dispose();
             }
         });
-
-
 
         table.setFillParent(true);
         stage.addActor(table);
 
         Gdx.input.setInputProcessor(stage);
-    }
-
-    public void onQuitClicked(){
-        loadSettings();
-        game.setScreen(new MenuScreen(game));
-        dispose();
     }
 
     public void hide() {
