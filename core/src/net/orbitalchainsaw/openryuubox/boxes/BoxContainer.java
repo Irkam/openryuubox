@@ -7,6 +7,7 @@ import net.orbitalchainsaw.openryuubox.Panel;
 import net.orbitalchainsaw.openryuubox.draganddrop.InnerBoxTarget;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 /**
  * Created by jivay on 22/10/14.
@@ -38,6 +39,7 @@ public class BoxContainer extends Box {
             parentPanel.dragAndDrop.addTarget(new InnerBoxTarget(newBox, this));
         }
         this.boxes.add(newBox);
+        simplify();
         updateBoxes();
     }
 
@@ -47,19 +49,18 @@ public class BoxContainer extends Box {
 
         if(boxes.size() > 0)
             updateBoxes();
-        else {
-            leftTarget.remove(); bottomTarget.remove();
-            if(bottomBoxContainer != null){
-                /*
-                plante lamentablement lorsqu'on supprime un BoxContainer ayant un numérateur vide et un dénomniateur non-vide
-                 */
-                for(Box bottomBox : bottomBoxContainer.boxes){
-                    bottomBoxContainer.removeBox(bottomBox);
-                }
-            }
+        else
+            this.delete();
+    }
 
-            this.remove();
+    public void delete(){
+        leftTarget.remove(); bottomTarget.remove();remove();
+        for(Box box : boxes){
+            box.remove();
         }
+        boxes.clear();
+        if(bottomBoxContainer != null)
+            bottomBoxContainer.delete();
     }
 
     public void addBottom(BoxContainer bc){
@@ -69,6 +70,30 @@ public class BoxContainer extends Box {
         }
         this.bottomBoxContainer = bc;
         bc.setParentBoxContainer(this);
+    }
+
+    public boolean simplify(){
+        for(Box box : boxes){
+            if(bottomBoxContainer != null)
+                for(Box otherBox : bottomBoxContainer.boxes)
+                    if(otherBox.type == box.type && otherBox.value == box.value){
+                        bottomBoxContainer.removeBox(otherBox);
+                        removeBox(box);
+                        addBox(new NumericBox(1));
+                        return true;
+                    }
+            if(parentBoxContainer != null){
+                for(Box otherBox : parentBoxContainer.boxes)
+                    if(otherBox.type == box.type && otherBox.value == box.value){
+                        parentBoxContainer.removeBox(otherBox);
+                        removeBox(box);
+                        parentBoxContainer.addBox(new NumericBox(1));
+                        return true;
+                    }
+            }
+        }
+
+        return false;
     }
 
     public void setParentBoxContainer(BoxContainer parent){parentBoxContainer = parent;}

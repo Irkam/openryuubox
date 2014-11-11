@@ -116,7 +116,8 @@ public class Panel{
                         default:
                             System.out.println("ajout d'une boite merdeuse");
                     }
-                    newBottom.getParentPanel().addContainer(newBottom);
+                    if(newBottom.boxes.size() > 0)
+                        newBottom.getParentPanel().addContainer(newBottom);
                 }
             });
         }
