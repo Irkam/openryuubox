@@ -121,6 +121,9 @@ public class Panel{
                 }
             });
         }
+
+        if(boxContainer.getBottomBoxContainer() != null)
+            addContainer(boxContainer.getBottomBoxContainer());
     }
 
     public boolean isInBounds(int x, int y, int width, int height){
