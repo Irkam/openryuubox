@@ -15,6 +15,7 @@ import net.orbitalchainsaw.openryuubox.PanelContainer;
 import net.orbitalchainsaw.openryuubox.boxes.BoxContainer;
 import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
 import net.orbitalchainsaw.openryuubox.boxes.NumericBox;
+import net.orbitalchainsaw.openryuubox.boxes.UnknownBox;
 
 /**
  * Created by Jean-Vincent on 13/10/2014.
@@ -44,11 +45,16 @@ public class MainGameScreen implements Screen{
 
         BoxContainer firstContainer = new BoxContainer(200, 180);
         firstContainer.addBox(new NumericBox(1));
+        firstContainer.addBox(new UnknownBox());
         this.panelContainer.leftPanel.addContainer(firstContainer);
 
         BoxContainer secondContainer = new BoxContainer(550, 280);
         secondContainer.addBox(new NumericBox(3));
         this.panelContainer.rightPanel.addContainer(secondContainer);
+
+        BoxContainer thirdContainer = new BoxContainer(700, 380);
+        thirdContainer.addBox(new NumericBox(4));
+        this.panelContainer.rightPanel.addContainer(thirdContainer);
     }
 
     @Override
