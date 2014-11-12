@@ -1,41 +1,37 @@
 {
     "dock":[
         {"type": "numeric", "value": 1},
-        {"type": "literal", "value": "alpha"},
-        {"type": "literal", "value": "beta"}
+        {"type": "literal", "value": 1},
+        {"type": "literal", "value": 2}
     ],
 
     "lpanel":[
         {
             "boxes":[
-                {"type": "literal", "value": "a"},
-                {"type": "literal", "value": "b"}],
+                {"type": "literal", "value": 1},
+                {"type": "literal", "value": 2}],
             "child":{
                 "boxes": [
-                    {"type": "literal", "value": "c"}],
+                    {"type": "literal", "value": 3}],
                 "child": null,
                 "options": null
             },            
-            "options":[
-                {"x": 120, "y": 120}
-            ]
+            "options": {"x": 220, "y": 220}
         }
     ],
 
     "rpanel":[
         {
             "boxes":[
-                {"type": "literal", "value": "a"},
-                {"type": "literal", "value": "b"}],
+                {"type": "literal", "value": 1},
+                {"type": "literal", "value": 2}],
             "child":{
                 "boxes": [
-                    {"type": "literal", "value": "c"}],
+                    {"type": "numeric", "value": 6}],
                 "child": null,
                 "options": null
             },            
-            "options":[
-                {"x": 120, "y": 120}
-            ]
+            "options": {"x": 450, "y": 260}
         }
     ]
 }

@@ -32,8 +32,8 @@ public class BoxesBar extends ArrayList<Box> {
         }
     }
 
-    public BoxesBar(){
-        this(null, null, 0, 0, 800, 64);
+    public BoxesBar(Stage stage, DragAndDrop dragAndDrop){
+        this(stage, dragAndDrop, 0, 0, 800, 64);
     }
 
     public BoxesBar(Box ... boxes){
