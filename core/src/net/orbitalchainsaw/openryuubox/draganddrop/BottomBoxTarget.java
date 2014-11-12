@@ -35,7 +35,7 @@ public class BottomBoxTarget extends DragAndDrop.Target{
     @Override
     public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
         BoxContainer newBottom = new BoxContainer((int) boxContainer.getX(),
-                (int) boxContainer.getY() - 64);
+                (int) boxContainer.getY() - 64, boxContainer.parentPanel);
         boxContainer.addBottom(newBottom);
 
         Box payloadBox = (Box) payload.getObject();

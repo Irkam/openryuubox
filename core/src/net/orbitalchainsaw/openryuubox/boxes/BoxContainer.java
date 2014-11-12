@@ -18,11 +18,13 @@ public class BoxContainer extends Box {
     BoxContainer bottomBoxContainer;
     EmptyBox leftTarget, bottomTarget;
     BoxContainer parentBoxContainer = null;
+    public Panel parentPanel = null;
 
-    public BoxContainer(int x, int y){
+    public BoxContainer(int x, int y, Panel parentPanel){
         super(x, y, new TextureRegion(new Texture("boxes/empty.png")));
         leftTarget = new EmptyBox((int) this.getX() - 64, (int) this.getY());
         bottomTarget = new EmptyBox((int) this.getX(), (int) this.getY() - 64);
+        this.parentPanel = parentPanel;
     }
 
     private void updateBoxes(){
@@ -42,6 +44,7 @@ public class BoxContainer extends Box {
         this.boxes.add(newBox);
         simplify();
         updateBoxes();
+        parentPanel.parent.gameOver();
     }
 
     public void removeBox(Box box){
@@ -107,6 +110,13 @@ public class BoxContainer extends Box {
         if(bottomBoxContainer != null)
             return bottomBoxContainer.hasTheBox();
 
+        return false;
+    }
+
+    public boolean gameOver(){
+        if(boxes.size() == 1)
+            if(boxes.get(0).type == Box.UNKNOWN)
+                return true;
         return false;
     }
 

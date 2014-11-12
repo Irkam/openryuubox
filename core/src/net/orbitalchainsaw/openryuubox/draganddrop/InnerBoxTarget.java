@@ -44,5 +44,7 @@ public class InnerBoxTarget extends Target{
             boxContainer.removeBox(innerBox);
         else
             boxContainer.simplify();
+
+        boxContainer.parentPanel.parent.gameOver();
     }
 }

@@ -10,7 +10,7 @@
             "boxes":[
                 {"type": "numeric", "value": 3},
                 {"type": "numeric", "value": 2},
-                {"type": "literal", "value": -1}],
+                {"type": "unknown", "value": 1}],
 
             "child":{
                 "boxes": [

@@ -26,7 +26,7 @@
         {
             "boxes":[
                 {"type": "literal", "value": 1},
-                {"type": "literal", "value": -1}],
+                {"type": "unknown", "value": 1}],
             "child":{
                 "boxes": [
                     {"type": "literal", "value": 2}],

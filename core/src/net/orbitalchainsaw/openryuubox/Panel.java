@@ -21,22 +21,25 @@ public class Panel{
     protected Actor panelTarget;
     public Stage stage;
     public DragAndDrop dragAndDrop;
-    public ArrayList<BoxContainer> boxContainers;
+    public ArrayList<BoxContainer> boxContainers, rootBoxContainers;
     public ArrayList<DragAndDrop.Target> boxDaDTargets;
+    public PanelContainer parent;
 
     public Panel(final Stage stage, final DragAndDrop dragAndDrop,
-                 int x, int y, int width, int height){
+                 int x, int y, int width, int height, PanelContainer parent){
         this.stage = stage;
         this.dragAndDrop = dragAndDrop;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.parent = parent;
         panelTarget = new Actor();
         panelTarget.setBounds(x, y, width, height);
         stage.addActor(panelTarget);
 
         boxContainers = new ArrayList<BoxContainer>();
+        rootBoxContainers = new ArrayList<BoxContainer>();
         boxDaDTargets = new ArrayList<DragAndDrop.Target>();
     }
 
@@ -72,6 +75,8 @@ public class Panel{
             stage.addActor(bottomContainer);
 
             dragAndDrop.addTarget(bottomBoxTarget);
+        }else{
+            rootBoxContainers.add(boxContainer);
         }
 
         if(boxContainer.getBottomBoxContainer() != null)
@@ -85,6 +90,14 @@ public class Panel{
     public boolean hasTheBox(){
         for(BoxContainer boxContainer : boxContainers){
             if(boxContainer.hasTheBox())
+                return true;
+        }
+        return false;
+    }
+
+    public boolean gameOver(){
+        for(BoxContainer boxContainer : boxContainers){
+            if(boxContainer.gameOver())
                 return true;
         }
         return false;

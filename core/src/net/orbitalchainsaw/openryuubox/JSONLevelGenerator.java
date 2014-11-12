@@ -41,12 +41,12 @@ public class JSONLevelGenerator{
 
             /* Charger leftPanel */
             for (int i = 0; i < lpanel.length(); i++) {
-                panelContainer.leftPanel.addContainer(createBoxContainer(lpanel.getJSONObject(i), null));
+                panelContainer.leftPanel.addContainer(createBoxContainer(lpanel.getJSONObject(i), null, panelContainer.leftPanel));
             }
 
             /* Charger rigthPanel */
             for (int i = 0; i < rpanel.length(); i++) {
-                panelContainer.rightPanel.addContainer(createBoxContainer(rpanel.getJSONObject(i), null));
+                panelContainer.rightPanel.addContainer(createBoxContainer(rpanel.getJSONObject(i), null, panelContainer.rightPanel));
 
             }
         }
@@ -58,7 +58,7 @@ public class JSONLevelGenerator{
         return panelContainer;
     }
 
-    protected static BoxContainer createBoxContainer(JSONObject container, BoxContainer parent) throws JSONException{
+    protected static BoxContainer createBoxContainer(JSONObject container, BoxContainer parent, Panel parentPanel) throws JSONException{
         int x, y;
         JSONArray boxes = container.getJSONArray("boxes");
         JSONObject options;
@@ -78,7 +78,7 @@ public class JSONLevelGenerator{
             }
         }
 
-        BoxContainer bc = new BoxContainer(x, y);
+        BoxContainer bc = new BoxContainer(x, y, parentPanel);
         for (int i = 0; i < boxes.length(); i++) {
             JSONObject box = boxes.getJSONObject(i);
             String boxType = box.getString("type");
@@ -95,7 +95,7 @@ public class JSONLevelGenerator{
         }
 
         if(!container.isNull("child"))
-            bc.addBottom(createBoxContainer(container.getJSONObject("child"), bc));
+            bc.addBottom(createBoxContainer(container.getJSONObject("child"), bc, parentPanel));
 
         return bc;
     }

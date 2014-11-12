@@ -10,6 +10,6 @@ public class UnknownBox extends Box{
     public UnknownBox(){
         super();
         type = Box.UNKNOWN;
-        region = new TextureRegion(new Texture("boxes/x.png"));
+        region = new TextureRegion(new Texture("boxes/default.png"));
     }
 }
