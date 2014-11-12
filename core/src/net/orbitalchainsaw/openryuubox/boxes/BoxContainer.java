@@ -80,7 +80,7 @@ public class BoxContainer extends Box {
                     if(otherBox.type == box.type && otherBox.value == box.value){
                         bottomBoxContainer.removeBox(otherBox);
                         removeBox(box);
-                        addBox(new NumericBox(1));
+                        //addBox(new NumericBox(1));
                         return true;
                     }
             if(parentBoxContainer != null){
@@ -88,7 +88,7 @@ public class BoxContainer extends Box {
                     if(otherBox.type == box.type && otherBox.value == box.value){
                         parentBoxContainer.removeBox(otherBox);
                         removeBox(box);
-                        parentBoxContainer.addBox(new NumericBox(1));
+                        //parentBoxContainer.addBox(new NumericBox(1));
                         return true;
                     }
             }

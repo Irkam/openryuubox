@@ -1,19 +1,21 @@
 {
     "dock":[
+        {"type": "numeric", "value": 3},
         {"type": "numeric", "value": 1},
-        {"type": "literal", "value": 1},
-        {"type": "literal", "value": 2}
+        {"type": "numeric", "value": 2}
     ],
 
     "lpanel":[
         {
             "boxes":[
-                {"type": "literal", "value": 1},
-                {"type": "literal", "value": 2}],
+                {"type": "numeric", "value": 3},
+                {"type": "numeric", "value": 2},
+                {"type": "literal", "value": -1}],
 
             "child":{
                 "boxes": [
-                    {"type": "literal", "value": 3}],
+                    {"type": "numeric", "value": 4},
+                    {"type": "numeric", "value": 6}],
                 "child": null,
                 "options": null
             },
@@ -24,8 +26,9 @@
     "rpanel":[
         {
             "boxes":[
-                {"type": "literal", "value": 1},
-                {"type": "literal", "value": 2}],
+                {"type": "numeric", "value": 1},
+                {"type": "numeric", "value": 2},
+                {"type": "literal", "value": 1}],
             "child":{
                 "boxes": [
                     {"type": "numeric", "value": 6}],

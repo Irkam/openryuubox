@@ -42,5 +42,7 @@ public class InnerBoxTarget extends Target{
     public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
         if(!((NumericBox) innerBox).mergeBoxes((NumericBox) payload.getObject()))
             boxContainer.removeBox(innerBox);
+        else
+            boxContainer.simplify();
     }
 }
