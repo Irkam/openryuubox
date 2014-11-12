@@ -99,6 +99,17 @@ public class BoxContainer extends Box {
 
     public void setParentBoxContainer(BoxContainer parent){parentBoxContainer = parent;}
 
+    public boolean hasTheBox(){
+        for(Box box : boxes)
+            if(box.type == Box.UNKNOWN)
+                return true;
+
+        if(bottomBoxContainer != null)
+            return bottomBoxContainer.hasTheBox();
+
+        return false;
+    }
+
     public EmptyBox getLeftTarget(){return leftTarget;}
     public EmptyBox getBottomTarget(){return bottomTarget;}
     public BoxContainer getBottomBoxContainer(){return bottomBoxContainer;}

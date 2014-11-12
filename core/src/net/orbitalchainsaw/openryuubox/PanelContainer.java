@@ -25,4 +25,15 @@ public class PanelContainer {
         this.rightPanel = rightPanel;
         this.boxesBar = boxesBar;
     }
+
+    public boolean gameOver(){
+        if(leftPanel.boxContainers.size() == 1)
+            if(leftPanel.hasTheBox())
+                return true;
+        if(rightPanel.boxContainers.size() == 1)
+            if(rightPanel.hasTheBox())
+                return true;
+
+        return false;
+    }
 }

@@ -70,8 +70,8 @@ public class BoxSource extends Source {
             Si la cible sur laquelle l'objet a été posé est valide (non-null)
              */
             if(parent.getAuthorizedBox() == null) {
-                //parent.setAuthorizedBox(this.box);
-                //parent.setBlockingTargets(target);
+                parent.setAuthorizedBox(this.box);
+                parent.setBlockingTargets(target);
             }else{
                 parent.notifyBoxAddedToTarget(target);
             }

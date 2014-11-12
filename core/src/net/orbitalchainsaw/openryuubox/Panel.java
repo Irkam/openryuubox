@@ -21,7 +21,7 @@ public class Panel{
     protected Actor panelTarget;
     public Stage stage;
     public DragAndDrop dragAndDrop;
-    public ArrayList<Box> boxContainers;
+    public ArrayList<BoxContainer> boxContainers;
     public ArrayList<DragAndDrop.Target> boxDaDTargets;
 
     public Panel(final Stage stage, final DragAndDrop dragAndDrop,
@@ -36,7 +36,7 @@ public class Panel{
         panelTarget.setBounds(x, y, width, height);
         stage.addActor(panelTarget);
 
-        boxContainers = new ArrayList<Box>();
+        boxContainers = new ArrayList<BoxContainer>();
         boxDaDTargets = new ArrayList<DragAndDrop.Target>();
     }
 
@@ -80,5 +80,13 @@ public class Panel{
 
     public boolean isInBounds(int x, int y, int width, int height){
         return(x > this.x && x + width < this.width && y > this.y && y + height < this.height);
+    }
+
+    public boolean hasTheBox(){
+        for(BoxContainer boxContainer : boxContainers){
+            if(boxContainer.hasTheBox())
+                return true;
+        }
+        return false;
     }
 }
