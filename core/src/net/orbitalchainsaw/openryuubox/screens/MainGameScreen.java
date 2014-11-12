@@ -36,6 +36,7 @@ public class MainGameScreen implements Screen{
     private Texture background;
     private Table table = new Table();
     private PanelContainer panelContainer;
+    private int niveau ;
 
     private Skin skin = new Skin(Gdx.files.internal("mainscreenui/uiskin.json"));
     private TextButton back = new TextButton("Retour", skin);
@@ -43,19 +44,26 @@ public class MainGameScreen implements Screen{
 
     public MainGameScreen(final OpenRyuuBox game, String joueur, int niveau){
         this.joueur = joueur;
+        this.niveau = niveau;
         this.game = game;
         this.stage = new Stage();
 
         Gdx.input.setInputProcessor(stage);
 
+        //background = new Texture(Gdx.files.internal("boxes/NIVEAU1.png"));
+        perso = new Texture(Gdx.files.internal("boxes/"+joueur+".png"));
+
         dragAndDrop = new DragAndDrop();
         game.font.setColor(Color.BLACK);
         game.font.setScale(2);
-        if(niveau == 1){
+        if(niveau == 1) {
+            background = new Texture(Gdx.files.internal("boxes/NIVEAU1.png"));
             JSONLevelGenerator.parseLevelJSON("levels/level0.json", stage, dragAndDrop);
-           
-        else
+        }
+        else {
+            background = new Texture(Gdx.files.internal("boxes/NIVEAU2.png"));
             JSONLevelGenerator.parseLevelJSON("levels/level1.json", stage, dragAndDrop);
+        }
     }
 
     @Override
@@ -65,13 +73,11 @@ public class MainGameScreen implements Screen{
 
         back.setPosition(660, 40);
 
-        background = new Texture(Gdx.files.internal("boxes/NIVEAU1.png"));
-        perso = new Texture(Gdx.files.internal("boxes/"+joueur+".png"));
 
         game.batch.begin();
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.batch.draw(perso, 30, 40, 128, 128);
-        game.font.draw(game.batch, "Niveau 1", 35, 85);
+        game.font.draw(game.batch, "Niveau "+niveau, 35, 85);
         game.batch.end();
 
         stage.act(delta);

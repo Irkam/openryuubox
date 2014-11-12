@@ -116,6 +116,7 @@ public class MenuScreen implements Screen{
 
     @Override
     public void show() {
+
         table.add(Options).size(100,60).padBottom(10).row();
         table.add(perso1).size(128,128).padBottom(10).row();
         table.add(perso2).size(128,128).padBottom(10).row();

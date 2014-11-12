@@ -40,8 +40,8 @@ public class LevelSelectionScreen implements Screen{
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        niveau1.setPosition(400, 300);
-        niveau2.setPosition(10, 300);
+        niveau1.setPosition(60, 200);
+        niveau2.setPosition(400, 200);
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
