@@ -38,7 +38,12 @@ public class MenuScreen implements Screen{
 
     public MenuScreen(final OpenRyuuBox game) {
         this.game = game;
+
         sound = Gdx.audio.newMusic(Gdx.files.internal("sound/Luiz.mp3"));
+        sound.setLooping(true);
+        sound.play();
+        sound.setVolume(0.8f);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
     }
@@ -50,11 +55,6 @@ public class MenuScreen implements Screen{
 
         buttonOptions.setPosition(600, 245);
         buttonPlay.setPosition(50, 245);
-
-
-        sound.setLooping(true);
-        sound.play();
-        sound.setVolume(0.8f);
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);

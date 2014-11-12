@@ -1,6 +1,5 @@
 package net.orbitalchainsaw.openryuubox;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
@@ -8,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import net.orbitalchainsaw.openryuubox.boxes.Box;
 import net.orbitalchainsaw.openryuubox.boxes.BoxContainer;
 import net.orbitalchainsaw.openryuubox.boxes.EmptyBox;
-import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
-import net.orbitalchainsaw.openryuubox.boxes.NumericBox;
+import net.orbitalchainsaw.openryuubox.draganddrop.BottomBoxTarget;
 import net.orbitalchainsaw.openryuubox.draganddrop.InnerBoxTarget;
+import net.orbitalchainsaw.openryuubox.draganddrop.LeftBoxTarget;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,8 @@ public class Panel{
     protected Actor panelTarget;
     public Stage stage;
     public DragAndDrop dragAndDrop;
-    public ArrayList<Box> boxContainers, boxDaDTargets;
+    public ArrayList<Box> boxContainers;
+    public ArrayList<DragAndDrop.Target> boxDaDTargets;
 
     public Panel(final Stage stage, final DragAndDrop dragAndDrop,
                  int x, int y, int width, int height){
@@ -37,7 +37,7 @@ public class Panel{
         stage.addActor(panelTarget);
 
         boxContainers = new ArrayList<Box>();
-        boxDaDTargets = new ArrayList<Box>();
+        boxDaDTargets = new ArrayList<DragAndDrop.Target>();
     }
 
     public void addContainer(final BoxContainer boxContainer){
@@ -54,32 +54,12 @@ public class Panel{
         cible à gauche de la boite pour les produits
          */
         EmptyBox leftContainer = boxContainer.getLeftTarget();
-        boxDaDTargets.add(leftContainer);
+        LeftBoxTarget leftBoxTarget = new LeftBoxTarget(leftContainer, boxContainer);
+        boxDaDTargets.add(leftBoxTarget);
         stage.addActor(leftContainer);
 
-        dragAndDrop.addTarget(new DragAndDrop.Target(leftContainer) {
-            public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                getActor().setColor(Color.GREEN);
-                return true;
-            }
-            public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                getActor().setColor(Color.WHITE);
-            }
-            public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                Box payloadBox = (Box) payload.getObject();
-                switch(payloadBox.type){
-                    case Box.LITERAL:
-                        boxContainer.addBox(new LiteralBox(payloadBox.value));
-                        break;
-                    case Box.NUMERIC:
-                        boxContainer.addBox(new NumericBox(payloadBox.value));
-                        break;
-                    default:
-                        System.out.println("ajout d'une boite merdeuse");
-                }
+        dragAndDrop.addTarget(leftBoxTarget);
 
-            }
-        });
 
         /*
         cible en-dessous de la boite pour les divisions
@@ -87,39 +67,11 @@ public class Panel{
         if(boxContainer.getParentBoxContainer() == null) {
             //Ne pas ajouter la cible pour créer une nouvelle fraction si le BoxContainer est déjà le dénominateur d'une fraction
             EmptyBox bottomContainer = boxContainer.getBottomTarget();
-            boxDaDTargets.add(bottomContainer);
+            BottomBoxTarget bottomBoxTarget = new BottomBoxTarget(bottomContainer, boxContainer);
+            boxDaDTargets.add(bottomBoxTarget);
             stage.addActor(bottomContainer);
 
-            dragAndDrop.addTarget(new DragAndDrop.Target(bottomContainer) {
-                public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    getActor().setColor(Color.GREEN);
-                    return true;
-                }
-
-                public void reset(DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                    getActor().setColor(Color.WHITE);
-                }
-
-                public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    BoxContainer newBottom = new BoxContainer((int) boxContainer.getX(),
-                            (int) boxContainer.getY() - 64);
-                    boxContainer.addBottom(newBottom);
-
-                    Box payloadBox = (Box) payload.getObject();
-                    switch(payloadBox.type){
-                        case Box.LITERAL:
-                            newBottom.addBox(new LiteralBox(payloadBox.value));
-                            break;
-                        case Box.NUMERIC:
-                            newBottom.addBox(new NumericBox(payloadBox.value));
-                            break;
-                        default:
-                            System.out.println("ajout d'une boite merdeuse");
-                    }
-                    if(newBottom.boxes.size() > 0)
-                        newBottom.getParentPanel().addContainer(newBottom);
-                }
-            });
+            dragAndDrop.addTarget(bottomBoxTarget);
         }
 
         if(boxContainer.getBottomBoxContainer() != null)

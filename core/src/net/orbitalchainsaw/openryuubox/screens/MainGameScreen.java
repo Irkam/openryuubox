@@ -25,8 +25,6 @@ import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
 import net.orbitalchainsaw.openryuubox.boxes.NumericBox;
 import net.orbitalchainsaw.openryuubox.boxes.UnknownBox;
 
-import javafx.scene.input.InputEvent;
-
 /**
  * Created by Jean-Vincent on 13/10/2014.
  */
