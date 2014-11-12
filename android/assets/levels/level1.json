@@ -16,7 +16,7 @@
                     {"type": "literal", "value": 3}],
                 "child": null,
                 "options": null
-            },            
+            },
             "options": {"x": 220, "y": 250}
         }
     ],
@@ -31,7 +31,7 @@
                     {"type": "numeric", "value": 6}],
                 "child": null,
                 "options": null
-            },            
+            },
             "options": {"x": 550, "y": 250}
         }
     ]

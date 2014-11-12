@@ -41,7 +41,7 @@ public class MainGameScreen implements Screen{
     private TextButton back = new TextButton("Retour", skin);
 
 
-    public MainGameScreen(final OpenRyuuBox game, String joueur){
+    public MainGameScreen(final OpenRyuuBox game, String joueur, int niveau){
         this.joueur = joueur;
         this.game = game;
         this.stage = new Stage();
@@ -51,8 +51,11 @@ public class MainGameScreen implements Screen{
         dragAndDrop = new DragAndDrop();
         game.font.setColor(Color.BLACK);
         game.font.setScale(2);
-
-        JSONLevelGenerator.parseLevelJSON("levels/level0.json", stage, dragAndDrop);
+        if(niveau == 1){
+            JSONLevelGenerator.parseLevelJSON("levels/level0.json", stage, dragAndDrop);
+           
+        else
+            JSONLevelGenerator.parseLevelJSON("levels/level1.json", stage, dragAndDrop);
     }
 
     @Override
