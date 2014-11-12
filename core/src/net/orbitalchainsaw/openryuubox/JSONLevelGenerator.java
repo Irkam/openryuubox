@@ -14,9 +14,10 @@ import org.json.*;
  */
 public class JSONLevelGenerator{
     public static PanelContainer parseLevelJSON(String filePath, Stage stage, DragAndDrop dragAndDrop) {
-        Panel lPanel, rPanel;
-        BoxesBar boxesBar;
         FileHandle jsonFile = Gdx.files.internal(filePath);
+        PanelContainer panelContainer = new PanelContainer(stage, dragAndDrop,
+                0, 64, 800/2, 480,
+                0, 64, 800/2, 480);
 
         try {
             JSONObject object = new JSONObject(jsonFile.readString());
@@ -25,30 +26,27 @@ public class JSONLevelGenerator{
             JSONArray lpanel = object.getJSONArray("lpanel");
             JSONArray rpanel = object.getJSONArray("rpanel");
 
+
             /* Charger la BoxesBar */
-            boxesBar = new BoxesBar(stage, dragAndDrop);
             for (int i = 0; i < dock.length(); i++) {
                 JSONObject io = dock.getJSONObject(i);
                 String boxType = io.getString("type");
                 int value = io.getInt("value");
 
                 if (boxType.compareTo("literal") == 0)
-                    boxesBar.add(new LiteralBox(value));
+                    panelContainer.boxesBar.add(new LiteralBox(value));
                 else if (boxType.compareTo("numeric") == 0)
-                    boxesBar.add(new NumericBox(value));
-
+                    panelContainer.boxesBar.add(new NumericBox(value));
             }
 
             /* Charger leftPanel */
-            lPanel = new Panel(stage, dragAndDrop, 0, 64, 800/2, 480);
             for (int i = 0; i < lpanel.length(); i++) {
-                lPanel.addContainer(createBoxContainer(lpanel.getJSONObject(i), null));
+                panelContainer.leftPanel.addContainer(createBoxContainer(lpanel.getJSONObject(i), null));
             }
 
             /* Charger rigthPanel */
-            rPanel = new Panel(stage, dragAndDrop, 800/2, 64, 800/2, 480);
             for (int i = 0; i < rpanel.length(); i++) {
-                rPanel.addContainer(createBoxContainer(rpanel.getJSONObject(i), null));
+                panelContainer.rightPanel.addContainer(createBoxContainer(rpanel.getJSONObject(i), null));
 
             }
         }
@@ -57,7 +55,7 @@ public class JSONLevelGenerator{
             return null;
         }
 
-        return new PanelContainer(lPanel, rPanel, boxesBar);
+        return panelContainer;
     }
 
     protected static BoxContainer createBoxContainer(JSONObject container, BoxContainer parent) throws JSONException{

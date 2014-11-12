@@ -1,9 +1,11 @@
 package net.orbitalchainsaw.openryuubox.draganddrop;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 
+import net.orbitalchainsaw.openryuubox.BoxesBar;
 import net.orbitalchainsaw.openryuubox.boxes.Box;
 import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
 import net.orbitalchainsaw.openryuubox.boxes.NumericBox;
@@ -16,25 +18,21 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class BoxSource extends Source {
     Box box;
+    BoxesBar parent;
 
-    public BoxSource(Box box) {
+    public BoxSource(Box box, BoxesBar parent) {
         super(box);
         this.box = box;
-
-        /*
-        type = box.type;
-
-        if(type == Box.NUMERIC)
-            value = ((NumericBox) box).value;
-
-        if(type == Box.LITERAL)
-            name = ((LiteralBox) box).name;
-            */
-
+        this.parent = parent;
     }
 
     @Override
     public Payload dragStart(InputEvent event, float x, float y, int pointer) {
+        Box authorizedBox = parent.getAuthorizedBox();
+        if(authorizedBox != null)
+            if(authorizedBox != this.box)
+                return null;
+
         Payload payload = new Payload();
         payload.setObject(getActor());
 
@@ -63,5 +61,20 @@ public class BoxSource extends Source {
         }
 
         return payload;
+    }
+
+    @Override
+    public void dragStop (InputEvent event, float x, float y, int pointer, Payload payload, DragAndDrop.Target target) {
+        if(target != null){
+            /*
+            Si la cible sur laquelle l'objet a été posé est valide (non-null)
+             */
+            if(parent.getAuthorizedBox() == null) {
+                //parent.setAuthorizedBox(this.box);
+                //parent.setBlockingTargets(target);
+            }else{
+                parent.notifyBoxAddedToTarget(target);
+            }
+        }
     }
 }
