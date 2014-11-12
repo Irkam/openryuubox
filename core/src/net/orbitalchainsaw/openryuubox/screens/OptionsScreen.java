@@ -25,12 +25,13 @@ public class OptionsScreen implements Screen {
     final OpenRyuuBox game;
     private Texture background;
     private OrthographicCamera camera;
-    private Skin skinLibgdx = new Skin(Gdx.files.internal("mainscreenui/uiskin.json"));
-    private CheckBox chkSound = new CheckBox("Son", skinLibgdx);
-
-    private TextButton quit = new TextButton("Quitter", skinLibgdx);
     private Stage stage = new Stage();
     private Table table = new Table();
+
+
+    private Skin skinLibgdx = new Skin(Gdx.files.internal("mainscreenui/uiskin.json"));
+    private TextButton quit = new TextButton("Quitter", skinLibgdx);
+
 
     private Label label1 = new Label("C est quoi ?\n" + "\n" +
             "OPEN RYUU BOX est inspire d une méthode norvégienne pour s initier a la resolution d equations mathematiques. \n", skinLibgdx);
@@ -52,17 +53,6 @@ public class OptionsScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
     }
 
-    private void saveSettings(){
-        GamePreferences prefs = GamePreferences.instance;
-        prefs.sound = chkSound.isChecked();
-    }
-
-    private void loadSettings(){
-        GamePreferences prefs = GamePreferences.instance;
-        prefs.load();
-        chkSound.setChecked(prefs.sound);
-    }
-
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -70,7 +60,6 @@ public class OptionsScreen implements Screen {
         label1.setPosition(400, 400);
         label1.setColor(Color.BLACK);
         label1.setFontScale(0.8f);
-
 
         label2.setPosition(400, 400);
         label2.setColor(Color.BLACK);
