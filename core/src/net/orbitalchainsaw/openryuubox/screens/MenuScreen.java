@@ -32,6 +32,7 @@ public class MenuScreen implements Screen{
     private Table table = new Table();
     private BitmapFont font1 = new BitmapFont();
 
+
     private Skin skin = new Skin(Gdx.files.internal("mainscreenui/uiskin.json"));
     private TextButton Options = new TextButton("Regles du Jeu", skin);
 
@@ -109,10 +110,6 @@ public class MenuScreen implements Screen{
         stage.draw();
     }
 
-    private void onPlayClicked () {
-        game.setScreen(new MainGameScreen(game, joueur));
-    }
-
     @Override
     public void resize(int width, int height) {
     }
@@ -136,7 +133,7 @@ public class MenuScreen implements Screen{
         perso1.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 joueur = "lapin";
-                game.setScreen(new MainGameScreen(game,joueur));
+                game.setScreen(new LevelSelectionScreen(game, joueur));
                 dispose();
             }
         });
@@ -144,7 +141,7 @@ public class MenuScreen implements Screen{
         perso2.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 joueur = "panda";
-                game.setScreen(new MainGameScreen(game,joueur));
+                game.setScreen(new LevelSelectionScreen(game,joueur));
                 dispose();
             }
         });
@@ -152,7 +149,7 @@ public class MenuScreen implements Screen{
         perso3.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 joueur = "chat";
-                game.setScreen(new MainGameScreen(game,joueur));
+                game.setScreen(new LevelSelectionScreen(game,joueur));
                 dispose();
             }
         });

@@ -36,6 +36,7 @@ public class JSONLevelGenerator{
                     boxesBar.add(new LiteralBox(value));
                 else if (boxType.compareTo("numeric") == 0)
                     boxesBar.add(new NumericBox(value));
+
             }
 
             /* Charger leftPanel */
