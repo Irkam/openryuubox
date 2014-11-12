@@ -5,10 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -25,22 +22,27 @@ import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
 import net.orbitalchainsaw.openryuubox.boxes.NumericBox;
 import net.orbitalchainsaw.openryuubox.boxes.UnknownBox;
 
+
 /**
  * Created by Jean-Vincent on 13/10/2014.
  */
 public class MainGameScreen implements Screen{
     final OpenRyuuBox game;
-
-    private Stage stage;
-    private PanelContainer panelContainer;
-    private Skin skin = new Skin(Gdx.files.internal("mainscreenui/uiskin.json"));
-    private Texture background;
-    private TextButton back = new TextButton("Retour", skin);
-    private Table table = new Table();
-
     DragAndDrop dragAndDrop;
 
-    public MainGameScreen(final OpenRyuuBox game){
+    private Stage stage;
+    private Texture perso;
+    private String joueur;
+    private Texture background;
+    private Table table = new Table();
+    private PanelContainer panelContainer;
+
+    private Skin skin = new Skin(Gdx.files.internal("mainscreenui/uiskin.json"));
+    private TextButton back = new TextButton("Retour", skin);
+
+
+    public MainGameScreen(final OpenRyuuBox game, String joueur){
+        this.joueur = joueur;
         this.game = game;
         this.stage = new Stage();
 
@@ -59,10 +61,13 @@ public class MainGameScreen implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         back.setPosition(660, 40);
+
         background = new Texture(Gdx.files.internal("boxes/NIVEAU1.png"));
+        perso = new Texture(Gdx.files.internal("boxes/"+joueur+".png"));
 
         game.batch.begin();
-        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());//corrige sans caméra !!
+        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(perso, 30, 40, 128, 128);
         game.font.draw(game.batch, "Niveau 1", 35, 85);
         game.batch.end();
 
