@@ -4,7 +4,7 @@ DragonBox-like open-source
 
 Documentations
 ---------------
-Voir le répertoire core/demo
+Voir le répertoire core/doc
 
 Executables de démo
 -------------------
