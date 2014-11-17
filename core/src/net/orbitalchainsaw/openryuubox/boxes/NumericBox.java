@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
- * Created by Jean-Vincent on 14/10/2014.
+ * Boîte représentant une valeur numérique
+ * @author Jean-Vincent
+ *
  */
 public class NumericBox extends Box{
     protected static final String BOX_ONE = BOX_TEXTURE_FOLDER + "d1.png";
@@ -19,7 +21,11 @@ public class NumericBox extends Box{
     protected static final String BOX_MIN_FIVE = BOX_TEXTURE_FOLDER + "d5.png";
     protected static final String BOX_SIX = BOX_TEXTURE_FOLDER + "d6.png";
     protected static final String BOX_MIN_SIX = BOX_TEXTURE_FOLDER + "d6.png";
-
+    
+    /**
+     * Crée une Box représentant une variable numérique et lui applique la texture correspondante.
+     * @param value entier relatif.
+     */
     public NumericBox(int value){
         super();
         type = Box.NUMERIC;
@@ -27,15 +33,22 @@ public class NumericBox extends Box{
         updateTextureByValue();
     }
 
+    /**
+     * additionne les valeurs de deux Box.
+     * @param box Box dont la valeur doit être ajoutée.
+     * @return false si la Box a été supprimée
+     */
     public boolean mergeBoxes(NumericBox box){
+    	if(value == (-box.value))
+    		return false;
+    	
         value += box.value;
-        if(value == 0)
-            return false;
 
         updateTextureByValue();
         return true;
     }
 
+    @Override
     public void updateTextureByValue(){
         Texture texture;
         switch(value){

@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
- * Created by Jean-Vincent on 14/10/2014.
+ * Boîte représentant une variable littérale.
+ * @author Jean-Vincent
+ *
  */
 public class LiteralBox extends Box{
     public final static int ALPHA = 1;
@@ -22,14 +24,19 @@ public class LiteralBox extends Box{
 
     public String name;
 
+    /**
+     * Crée une Box représentant une variable littérale et lui applique la texture correspondante.
+     * @param value valeur parmi ALPHA, BETA, GAMMA ou DELTA.
+     */
     public LiteralBox(int value){
         super();
         type = Box.LITERAL;
         this.value = value;
-        updateTextureByName();
+        updateTextureByValue();
     }
 
-    public void updateTextureByName(){
+    @Override
+    public void updateTextureByValue(){
         Texture texture;
         switch(value){
             case ALPHA:

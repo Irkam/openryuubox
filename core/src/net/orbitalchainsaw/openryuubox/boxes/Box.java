@@ -13,7 +13,10 @@ import net.orbitalchainsaw.openryuubox.Panel;
 import java.awt.Rectangle;
 
 /**
- * Created by Jean-Vincent on 13/10/2014.
+ * Classe des boîtes.
+ * Abstraite pour ne pas créer de boîtes vides à partir de cette classe.
+ * @author Jean-Vincent
+ *
  */
 public abstract class Box extends Actor{
     protected static final String BOX_TEXTURE_FOLDER = "boxes/";
@@ -27,11 +30,19 @@ public abstract class Box extends Actor{
     protected TextureRegion region;
     protected Panel parentPanel = null;
 
+    /**
+     * Constructeur par défaut
+     */
     public Box(){
         this.region = new TextureRegion(new Texture(BOX_TEXTURE_DEFAULT));
         setBounds(0, 0, this.width, this.height);
     }
 
+    /**
+     * Crée une boîte
+     * @param x
+     * @param y
+     */
     public Box(int x, int y){
         this.region = new TextureRegion(new Texture("boxes/default.png"));
         setBounds(x, y, this.width, this.height);
@@ -41,13 +52,22 @@ public abstract class Box extends Actor{
         this.region = region;
         setBounds(x, y, this.width, this.height);
     }
-
+    
+    /**
+     * Crée une boîte en lui appliquant une texture
+     * @param region région de texture (voir doc GDX sur les textures)
+     */
     public Box(TextureRegion region){
         this.region = region;
         setBounds(0, 0, width, height);
     }
 
     @Override
+    /**
+     * Ajoute la Box au batch pour l'affichage, qui envoie toutes les images à OpenGL.
+     * @param batch batch d'affichage
+     * @param parentAlpha transparence du parent
+     */
     public void draw(Batch batch, float parentAlpha){
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a*parentAlpha);
@@ -56,8 +76,18 @@ public abstract class Box extends Actor{
 
     public void setParentPanel(Panel panel){this.parentPanel = panel;}
     public Panel getParentPanel(){return this.parentPanel;}
-
+    
+    /**
+     * Change les coordonées d'une Box.
+     * @param x
+     * @param y
+     */
     public void setCoord(int x, int y){
         setBounds(x, y, width, height);
     }
+    
+    /**
+     * applique la texture correspondant à la valeur de la Box.
+     */
+    public abstract void updateTextureByValue();
 }

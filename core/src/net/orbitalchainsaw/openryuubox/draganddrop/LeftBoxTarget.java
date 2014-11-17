@@ -10,7 +10,9 @@ import net.orbitalchainsaw.openryuubox.boxes.LiteralBox;
 import net.orbitalchainsaw.openryuubox.boxes.NumericBox;
 
 /**
- * Created by jivay on 05/11/14.
+ * 
+ * @author Jean-Vincent
+ *
  */
 public class LeftBoxTarget extends DragAndDrop.Target{
     Box innerBox;
@@ -22,16 +24,29 @@ public class LeftBoxTarget extends DragAndDrop.Target{
         boxContainer = container;
     }
 
+    /**
+     * Appelée lorsque le glisser-déposer survole la cible
+     * @return true si cette cible est valide et qu'on peut y déposer l'objet. false sinon.
+     */
     @Override
     public boolean drag (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
         getActor().setColor(Color.GREEN);
         return true;
     }
 
+    /**
+     * le glisser-déposer ne survole plus la cible.
+     */
+    @Override
     public void reset (DragAndDrop.Source source, DragAndDrop.Payload payload) {
         getActor().setColor(Color.WHITE);
     }
-
+    
+    /**
+     * le draganddrop largue l'objet sur la cible. La copie de l'objet se fait ici. Si la copie ne se fait pas, la source est supprimée.
+     * @param source source de l'objet transporté
+     * @param payload objet transporté
+     */
     @Override
     public void drop (DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
         Box payloadBox = (Box) payload.getObject();

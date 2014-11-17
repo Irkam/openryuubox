@@ -11,7 +11,9 @@ import net.orbitalchainsaw.openryuubox.draganddrop.LeftBoxTarget;
 import java.util.ArrayList;
 
 /**
- * Created by jivay on 22/10/14.
+ * Dock contenant les Box à déposer dans la zone de jeu.
+ * @author Jean-Vincent
+ *
  */
 public class BoxesBar extends ArrayList<Box> {
     protected int x, y;
@@ -64,9 +66,23 @@ public class BoxesBar extends ArrayList<Box> {
         return true;
     }
 
+    /**
+     * Renvoie la boîte autorisée à être déplacée vers la zone de jeu
+     * @return Box Box autorisée à être déplacée. null si aucune restriction
+     */
     public Box getAuthorizedBox(){return authorizedBox;}
+    
+    /**
+     * Ajoute une restriction pour le déplacement des Box vers la zone de jeu. 
+     * @param box Box sur laquelle placer la restriction.
+     */
     public void setAuthorizedBox(Box box){this.authorizedBox = box;}
 
+    /**
+     * Génère l'interdiction de glisser-déposer une Box d'un autre type que celui utilisé précedemment
+     * tant que toutes les Target du même type n'ont pas été remplies.
+     * @param target
+     */
     public void setBlockingTargets(DragAndDrop.Target target){
         for(DragAndDrop.Target t : parent.leftPanel.boxDaDTargets){
             if(t instanceof BottomBoxTarget && target instanceof  BottomBoxTarget)
@@ -76,9 +92,12 @@ public class BoxesBar extends ArrayList<Box> {
         }
     }
 
+    /**
+     * Indique qu'une Target a été remplie et peut être retirée de la liste d'attente blockingTargets. 
+     * @param target
+     */
     public void notifyBoxAddedToTarget(DragAndDrop.Target target){
         blockingTargets.remove(target);
-
 
         if(blockingTargets.size() == 0)
             setAuthorizedBox(null);

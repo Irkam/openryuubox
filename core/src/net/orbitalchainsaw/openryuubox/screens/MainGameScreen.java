@@ -24,7 +24,9 @@ import net.orbitalchainsaw.openryuubox.boxes.UnknownBox;
 
 
 /**
- * Created by Jean-Vincent on 13/10/2014.
+ * Ecran principal de jeu. Gère l'affichage et l'initialisation de la partie.
+ * @author Jean-Vincent
+ *
  */
 public class MainGameScreen implements Screen{
     final OpenRyuuBox game;

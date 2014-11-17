@@ -4,12 +4,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
- * Created by Jean-Vincent on 14/10/2014.
+ * Boîte de valeur inconnue, à isoler pour en connaître la valeur. Correspond dans le jeu original à la DragonBox.
+ * @author Jean-Vincent
+ *
  */
 public class UnknownBox extends Box{
     public UnknownBox(){
         super();
         type = Box.UNKNOWN;
-        region = new TextureRegion(new Texture("boxes/default.png"));
+        updateTextureByValue();
     }
+
+	@Override
+	public void updateTextureByValue() {
+		region = new TextureRegion(new Texture("boxes/default.png"));
+	}
 }
